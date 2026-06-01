@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>毕生优养 - 天然食养 · 品质生活</title>
+    <style>
+        /* ========== CSS Reset & Variables ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --warm-cream: #FAF6F1;
+            --light-cream: #F5F0E8;
+            --soft-beige: #E8E0D5;
+            --gold: #C9A96E;
+            --light-gold: #D4B97A;
+            --warm-brown: #8B7355;
+            --bean-green: #A8C69F;
+            --light-green: #C5DDB8;
+            --pale-green: #E8F0E0;
+            --text-dark: #3D3D3D;
+            --text-light: #7A7A7A;
+            --white: #FFFFFF;
+            --shadow-sm: 0 2px 10px rgba(139, 115, 85, 0.08);
+            --shadow-md: 0 4px 18px rgba(139, 115, 85, 0.12);
+            --shadow-lg: 0 8px 30px rgba(139, 115, 85, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+            background-color: var(--warm-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ========== Mobile Header ========== */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, var(--warm-cream) 0%, var(--white) 100%);
+            z-index: 1000;
+            padding: 12px 15px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mobile-header-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mobile-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            text-decoration: none;
+            color: var(--warm-brown);
+        }
+
+        .mobile-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .mobile-logo-text {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .mobile-logo-text span {
+            color: var(--gold);
+        }
+
+        .mobile-search {
+            flex: 1;
+            position: relative;
+        }
+
+        .mobile-search-input {
+            width: 100%;
+            height: 34px;
+            background: var(--white);
+            border: 1px solid var(--soft-beige);
+            border-radius: 17px;
+            padding: 0 40px 0 14px;
+            font-size: 13px;
+            color: var(--text-dark);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .mobile-search-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1);
+        }
+
+        .mobile-search-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .mobile-search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+
+        /* ========== Desktop Header ========== */
+        header {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(168, 198, 159, 0.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--warm-brown);
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--bean-green) 0%, var(--light-green) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logo-text span {
+            color: var(--bean-green);
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .header-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--bean-green);
+            transition: var(--transition);
+        }
+
+        .header-nav a:hover {
+            color: var(--bean-green);
+        }
+
+        .header-nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-search {
+            position: relative;
+        }
+
+        .header-search-input {
+            width: 200px;
+            height: 38px;
+            background: var(--light-cream);
+            border: 1px solid transparent;
+            border-radius: 19px;
+            padding: 0 40px 0 16px;
+            font-size: 13px;
+            color: var(--text-dark);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .header-search-input:focus {
+            border-color: var(--gold);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1);
+        }
+
+        .header-search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+
+        .contact-btn {
+            padding: 9px 22px;
+            background: linear-gradient(135deg, var(--bean-green) 0%, var(--light-green) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 22px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .contact-btn:hover {
+            background: var(--warm-brown);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ========== Mobile Banner ========== */
+        .mobile-banner {
+            display: none;
+            margin-top: 58px;
+            position: relative;
+            height: 210px;
+            overflow: hidden;
+        }
+
+        .mobile-banner-slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .mobile-banner-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .mobile-banner-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .banner-1::before {
+            background: linear-gradient(135deg, #E8DCC8 0%, #D8C8A8 40%, #C9A96E 100%);
+        }
+
+        .banner-2::before {
+            background: linear-gradient(135deg, #C5DDB8 0%, #A8C69F 50%, #8FB583 100%);
+        }
+
+        .banner-3::before {
+            background: linear-gradient(135deg, #F5F0E8 0%, #E8DCC8 50%, #D4C4A8 100%);
+        }
+
+        .mobile-banner-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .mobile-banner-content .banner-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .mobile-banner-content h2 {
+            font-size: 20px;
+            color: var(--warm-brown);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .mobile-banner-content p {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .mobile-banner-btn {
+            display: inline-block;
+            padding: 7px 18px;
+            background: rgba(255,255,255,0.9);
+            color: var(--warm-brown);
+            border-radius: 18px;
+            font-size: 11px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .mobile-banner-btn:hover {
+            background: var(--white);
+            transform: scale(1.05);
+        }
+
+        .mobile-banner-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .mobile-banner-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-banner-dot.active {
+            background: var(--white);
+            width: 16px;
+            border-radius: 3px;
+        }
+
+        /* ========== Mobile Category ========== */
+        .mobile-category {
+            display: none;
+            padding: 18px 15px;
+            background: var(--white);
+        }
+
+        .mobile-category-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .mobile-category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .mobile-category-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .mobile-category-icon {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(180deg, var(--warm-cream) 0%, var(--light-cream) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .mobile-category-item span {
+            font-size: 10px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* ========== Mobile Products ========== */
+        .mobile-section {
+            display: none;
+            padding: 15px 15px;
+        }
+
+        .mobile-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .mobile-section-title {
+            font-size: 15px;
+            color: var(--warm-brown);
+            font-weight: 600;
+        }
+
+        .mobile-section-more {
+            font-size: 11px;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .mobile-products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .mobile-product-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .mobile-product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .mobile-product-img {
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+        }
+
+        .p-bg-1 { background: linear-gradient(180deg, #F5F0E8 0%, #E8E0D5 100%); }
+        .p-bg-2 { background: linear-gradient(180deg, #E8F0E0 0%, #C5DDB8 100%); }
+        .p-bg-3 { background: linear-gradient(180deg, #F0EDE8 0%, #E0D8D0 100%); }
+
+        .mobile-product-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            padding: 3px 8px;
+            background: var(--gold);
+            color: var(--white);
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 500;
+        }
+
+        .mobile-product-info {
+            padding: 14px;
+        }
+
+        .mobile-product-brand {
+            font-size: 10px;
+            color: var(--gold);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .mobile-product-name {
+            font-size: 13px;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            line-height: 1.4;
+            font-weight: 500;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mobile-product-ingredients {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mobile-product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-product-price {
+            font-size: 16px;
+            color: var(--warm-brown);
+            font-weight: 600;
+        }
+
+        .mobile-product-price small {
+            font-size: 11px;
+            font-weight: 400;
+        }
+
+        .mobile-product-cart {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--pale-green) 0%, var(--light-green) 100%);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-product-cart:hover {
+            background: var(--bean-green);
+            transform: scale(1.1);
+        }
+
+        /* ========== Mobile Brand Story ========== */
+        .mobile-brand-story {
+            display: none;
+            padding: 20px 15px;
+            background: var(--white);
+        }
+
+        .mobile-brand-card {
+            background: linear-gradient(180deg, var(--warm-cream) 0%, var(--white) 100%);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 14px;
+            border: 1px solid var(--soft-beige);
+        }
+
+        .mobile-brand-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .mobile-brand-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mobile-brand-card h3 {
+            font-size: 16px;
+            color: var(--warm-brown);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .mobile-brand-card p {
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ========== Mobile Bottom Navigation ========== */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 -3px 15px rgba(139, 115, 85, 0.1);
+            z-index: 9999;
+            padding: 5px 0;
+            padding-bottom: env(safe-area-inset-bottom, 5px);
+        }
+
+        .mobile-bottom-nav-inner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .bottom-nav-item-icon {
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .bottom-nav-item span {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--gold);
+        }
+
+        .bottom-nav-item.active .bottom-nav-item-icon {
+            transform: scale(1.15);
+        }
+
+        /* ========== Desktop Banner ========== */
+        .banner {
+            margin-top: 74px;
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .banner-slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .banner-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .banner-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.95;
+        }
+
+        .slide-1::before {
+            background: linear-gradient(135deg, #F5F0E8 0%, #E8DCC8 40%, #D8C8A8 100%);
+        }
+
+        .slide-2::before {
+            background: linear-gradient(135deg, #E8F0E0 0%, #C5DDB8 50%, #A8C69F 100%);
+        }
+
+        .slide-3::before {
+            background: linear-gradient(135deg, #FAF6F1 0%, #F5F0E8 50%, #E8E0D5 100%);
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            max-width: 550px;
+        }
+
+        .slide-tag {
+            display: inline-block;
+            padding: 5px 14px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 18px;
+            font-size: 12px;
+            color: var(--warm-brown);
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        .banner-content h1 {
+            font-size: 38px;
+            color: var(--warm-brown);
+            margin-bottom: 16px;
+            line-height: 1.3;
+            font-weight: 600;
+        }
+
+        .banner-content p {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: 28px;
+            line-height: 1.9;
+            letter-spacing: 1px;
+        }
+
+        .banner-btn {
+            display: inline-block;
+            padding: 12px 36px;
+            background: var(--warm-brown);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 28px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .banner-btn:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .banner-visual {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 160px;
+            opacity: 0.5;
+        }
+
+        .slide-1 .banner-visual { right: 80px; }
+        .slide-2 .banner-visual { right: 100px; }
+        .slide-3 .banner-visual { right: 60px; }
+
+        .banner-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .banner-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(139, 115, 85, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .banner-dot.active {
+            background: var(--gold);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* ========== Desktop Section ========== */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            color: var(--warm-brown);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .section-header p {
+            font-size: 14px;
+            color: var(--text-light);
+            letter-spacing: 2px;
+        }
+
+        .section-header .line {
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--bean-green), var(--gold));
+            margin: 18px auto 0;
+            border-radius: 2px;
+        }
+
+        .brand-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 45px;
+        }
+
+        .brand-tab {
+            padding: 10px 30px;
+            background: var(--white);
+            border: 1px solid var(--soft-beige);
+            border-radius: 26px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .brand-tab:hover {
+            border-color: var(--bean-green);
+            color: var(--bean-green);
+        }
+
+        .brand-tab.active {
+            background: linear-gradient(135deg, var(--bean-green) 0%, var(--light-green) 100%);
+            border-color: var(--bean-green);
+            color: var(--white);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .product-card.hidden {
+            display: none;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-image {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 65px;
+            position: relative;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 35px;
+            background: linear-gradient(to top, rgba(255,255,255,0.9), transparent);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            padding: 4px 12px;
+            background: var(--white);
+            border-radius: 12px;
+            font-size: 11px;
+            color: var(--warm-brown);
+            box-shadow: var(--shadow-sm);
+            font-weight: 500;
+        }
+
+        .product-details {
+            padding: 20px;
+        }
+
+        .product-brand {
+            font-size: 11px;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .product-name {
+            font-size: 15px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .product-ingredients {
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid var(--light-cream);
+        }
+
+        .product-price {
+            font-size: 18px;
+            color: var(--warm-brown);
+            font-weight: 600;
+        }
+
+        .product-price small {
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .product-cart {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--pale-green) 0%, var(--light-green) 100%);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--warm-brown);
+            transition: var(--transition);
+        }
+
+        .product-cart:hover {
+            background: var(--bean-green);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        /* ========== Brand Story ========== */
+        .brand-story {
+            background: var(--white);
+        }
+
+        .story-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .story-visual {
+            height: 420px;
+            background: linear-gradient(135deg, var(--pale-green) 0%, var(--light-green) 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 130px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-visual::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -40%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+        }
+
+        .story-text h2 {
+            font-size: 28px;
+            color: var(--warm-brown);
+            margin-bottom: 22px;
+            font-weight: 600;
+        }
+
+        .story-text p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 2;
+            margin-bottom: 16px;
+        }
+
+        .story-features {
+            display: flex;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .story-feature {
+            text-align: center;
+        }
+
+        .story-feature-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--pale-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin: 0 auto 8px;
+        }
+
+        .story-feature span {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* ========== Brands Display ========== */
+        .brands-display {
+            background: linear-gradient(180deg, var(--warm-cream) 0%, var(--white) 100%);
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .brand-item {
+            background: var(--white);
+            border-radius: 22px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .brand-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .brand-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 46px;
+        }
+
+        .brand-item:nth-child(1) .brand-icon { background: linear-gradient(135deg, #F5F0E8 0%, #E8E0D5 100%); }
+        .brand-item:nth-child(2) .brand-icon { background: linear-gradient(135deg, #E8F0E0 0%, #C5DDB8 100%); }
+        .brand-item:nth-child(3) .brand-icon { background: linear-gradient(135deg, #F0EDE8 0%, #E0D8D0 100%); }
+
+        .brand-item h3 {
+            font-size: 20px;
+            color: var(--warm-brown);
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .brand-item p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .brand-origin-tag {
+            display: inline-block;
+            padding: 7px 16px;
+            background: var(--pale-green);
+            border-radius: 18px;
+            font-size: 12px;
+            color: var(--warm-brown);
+            font-weight: 500;
+        }
+
+        /* ========== Values Section ========== */
+        .values-section {
+            background: var(--white);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 35px 20px;
+            background: var(--warm-cream);
+            border-radius: 18px;
+            transition: var(--transition);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .value-icon {
+            width: 65px;
+            height: 65px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 18px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .value-card h4 {
+            font-size: 15px;
+            color: var(--warm-brown);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .value-card p {
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            background: var(--warm-brown);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 45px;
+            padding-bottom: 45px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .footer-brand h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+            opacity: 0.7;
+            line-height: 1.9;
+        }
+
+        .footer-col h4 {
+            font-size: 15px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--bean-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 28px;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        /* ========== Product Detail Modal ========== */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product-modal.active {
+            display: flex;
+        }
+
+        .product-modal-content {
+            background: var(--white);
+            border-radius: 24px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .product-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            background: var(--warm-cream);
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 1;
+        }
+
+        .product-modal-close:hover {
+            background: var(--soft-beige);
+            transform: rotate(90deg);
+        }
+
+        .product-modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .product-modal-image {
+            padding: 60px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            border-right: 1px solid var(--soft-beige);
+        }
+
+        .product-modal-info {
+            padding: 60px 40px;
+        }
+
+        .product-modal-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--gold);
+            color: var(--white);
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .product-modal-brand {
+            font-size: 13px;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .product-modal-name {
+            font-size: 28px;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .product-modal-ingredients {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .product-modal-price {
+            font-size: 32px;
+            color: var(--warm-brown);
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .product-modal-price small {
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .product-modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .product-modal-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .product-modal-btn-primary {
+            background: linear-gradient(135deg, var(--bean-green) 0%, var(--light-green) 100%);
+            color: var(--white);
+        }
+
+        .product-modal-btn-primary:hover {
+            background: var(--warm-brown);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .product-modal-btn-secondary {
+            background: var(--light-cream);
+            color: var(--text-dark);
+        }
+
+        .product-modal-btn-secondary:hover {
+            background: var(--soft-beige);
+        }
+
+        /* ========== Responsive Styles ========== */
+        @media (max-width: 768px) {
+            .mobile-header {
+                display: block;
+            }
+
+            header {
+                display: none;
+            }
+
+            .mobile-banner {
+                display: block;
+            }
+
+            .mobile-category {
+                display: block;
+            }
+
+            .mobile-section {
+                display: block;
+            }
+
+            .mobile-brand-story {
+                display: block;
+            }
+
+            .mobile-bottom-nav {
+                display: flex;
+            }
+
+            body {
+                padding-bottom: 58px;
+                background: var(--warm-cream);
+            }
+
+            .banner, .section:not(.mobile-section), .brands-display, .values-section, footer {
+                display: none !important;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .product-modal-body {
+                grid-template-columns: 1fr;
+            }
+
+            .product-modal-image {
+                padding: 40px;
+                border-right: none;
+                border-bottom: 1px solid var(--soft-beige);
+                font-size: 80px;
+            }
+
+            .product-modal-info {
+                padding: 30px 20px 20px;
+            }
+
+            .product-modal-name {
+                font-size: 22px;
+            }
+
+            .product-modal-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 992px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .story-wrapper {
+                grid-template-columns: 1fr;
+                gap: 45px;
+            }
+
+            .story-visual {
+                height: 320px;
+            }
+
+            .brands-grid {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+                margin: 0 auto;
+            }
+
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-top {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .banner {
+                height: 420px;
+            }
+
+            .banner-content h1 {
+                font-size: 32px;
+            }
+
+            .header-search-input {
+                width: 150px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-header, .mobile-banner, .mobile-category, .mobile-section, .mobile-brand-story, .mobile-bottom-nav {
+                display: none !important;
+            }
+
+            header {
+                display: block;
+            }
+
+            .banner {
+                display: block;
+            }
+
+            .section {
+                display: block;
+            }
+
+            .brands-display, .values-section, footer {
+                display: block;
+            }
+        }
+
+        @media (min-width: 993px) and (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* ========== Toast Notification ========== */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            z-index: 3000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @media (min-width: 769px) {
+            .toast {
+                bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-inner">
+            <a href="#mobile-home" class="mobile-logo">
+                <div class="mobile-logo-icon">🌿</div>
+                <div class="mobile-logo-text">毕生<span>优养</span></div>
+            </a>
+            <div class="mobile-search">
+                <input type="text" class="mobile-search-input" id="mobileSearchInput" placeholder="搜索天然食养好物">
+                <span class="mobile-search-icon" id="mobileSearchBtn">🔍</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header -->
+    <header>
+        <div class="container">
+            <div class="header-main">
+                <a href="#home" class="logo">
+                    <div class="logo-icon">🌿</div>
+                    <div class="logo-text">毕生<span>优养</span></div>
+                </a>
+                <nav class="header-nav">
+                    <a href="#home">首页</a>
+                    <a href="#products">产品中心</a>
+                    <a href="#brands">品牌故事</a>
+                    <a href="#values">品质保障</a>
+                    <a href="#contact">联系我们</a>
+                </nav>
+                <div class="header-right">
+                    <div class="header-search">
+                        <input type="text" class="header-search-input" id="desktopSearchInput" placeholder="搜索产品...">
+                        <span class="header-search-icon" id="desktopSearchBtn">🔍</span>
+                    </div>
+                    <a href="admin.html" class="contact-btn">管理后台</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Banner -->
+    <section class="mobile-banner" id="mobile-home">
+        <div class="mobile-banner-slides" id="mobileBannerSlides">
+        </div>
+        <div class="mobile-banner-dots" id="mobileBannerDots">
+        </div>
+    </section>
+
+    <!-- Mobile Category -->
+    <section class="mobile-category">
+        <div class="mobile-category-grid">
+            <div class="mobile-category-item" data-brand="all">
+                <div class="mobile-category-icon">🏠</div>
+                <span>全部</span>
+            </div>
+            <div class="mobile-category-item" data-brand="bsyy">
+                <div class="mobile-category-icon">🌾</div>
+                <span>毕生优养</span>
+            </div>
+            <div class="mobile-category-item" data-brand="dyf">
+                <div class="mobile-category-icon">🫘</div>
+                <span>豆养坊</span>
+            </div>
+            <div class="mobile-category-item" data-brand="skyq">
+                <div class="mobile-category-icon">💧</div>
+                <span>宋康优泉</span>
+            </div>
+            <div class="mobile-category-item" data-brand="all">
+                <div class="mobile-category-icon">📋</div>
+                <span>更多</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Products -->
+    <section class="mobile-section" id="mobile-products">
+        <div class="mobile-section-header">
+            <span class="mobile-section-title">热门推荐</span>
+            <a href="#" class="mobile-section-more" id="mobileClearFilter">清除筛选</a>
+        </div>
+        <div class="mobile-products-grid" id="mobileProductsGrid">
+        </div>
+    </section>
+
+    <!-- Mobile Brand Story -->
+    <section class="mobile-brand-story" id="mobile-brand">
+        <div class="mobile-section-header">
+            <span class="mobile-section-title">品牌故事</span>
+        </div>
+        <div class="mobile-brand-card">
+            <div class="mobile-brand-icon">🌾</div>
+            <h3>毕生优养</h3>
+            <p>专注谷物营养，甄选东北黑土地优质原料，传承千年食养智慧，为现代人提供天然、健康的谷物营养解决方案</p>
+        </div>
+        <div class="mobile-brand-card">
+            <div class="mobile-brand-icon">🫘</div>
+            <h3>豆养坊</h3>
+            <p>以豆为养，精选有机农场优质豆种，采用先进工艺保留豆香本味，让每一杯豆浆都丝滑浓香，营养丰富</p>
+        </div>
+        <div class="mobile-brand-card">
+            <div class="mobile-brand-icon">💧</div>
+            <h3>宋康优泉</h3>
+            <p>以天然泉水为基底，融入草本植物精华，滴滴纯净，滴滴健康，为您的日常饮水注入自然的滋养</p>
+        </div>
+    </section>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <div class="mobile-bottom-nav-inner">
+            <button class="bottom-nav-item active" data-target="#mobile-home">
+                <span class="bottom-nav-item-icon">🏠</span>
+                <span>首页</span>
+            </button>
+            <button class="bottom-nav-item" data-target="#mobile-products">
+                <span class="bottom-nav-item-icon">🛒</span>
+                <span>商城</span>
+            </button>
+            <button class="bottom-nav-item" data-target="#mobile-products">
+                <span class="bottom-nav-item-icon">📋</span>
+                <span>分类</span>
+            </button>
+            <button class="bottom-nav-item" data-target="#mobile-products">
+                <span class="bottom-nav-item-icon">🛍️</span>
+                <span>购物车</span>
+            </button>
+            <button class="bottom-nav-item" data-target="#mobile-brand">
+                <span class="bottom-nav-item-icon">👤</span>
+                <span>我的</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Desktop Banner -->
+    <section class="banner" id="home">
+        <div class="banner-slides" id="bannerSlides">
+        </div>
+        <div class="banner-dots" id="bannerDots">
+        </div>
+    </section>
+
+    <!-- Desktop Products -->
+    <section class="section" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>产品中心</h2>
+                <p>天然食材 · 匠心品质 · 守护健康</p>
+                <div class="line"></div>
+            </div>
+            <div class="brand-tabs" id="brandTabs">
+                <button class="brand-tab active" data-brand="all">全部产品</button>
+                <button class="brand-tab" data-brand="bsyy">毕生优养</button>
+                <button class="brand-tab" data-brand="dyf">豆养坊</button>
+                <button class="brand-tab" data-brand="skyq">宋康优泉</button>
+            </div>
+            <div class="products-grid" id="productsGrid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story -->
+    <section class="section brand-story" id="brands">
+        <div class="container">
+            <div class="story-wrapper">
+                <div class="story-visual">🌾</div>
+                <div class="story-text">
+                    <h2>传承食养智慧，守护天然健康</h2>
+                    <p>我们深入全国各地优质产区，从东北的黑土地到云南的高原，从深山的老林到绿色的田野，精选最纯净、最天然的食材。</p>
+                    <p>每一道工序都凝聚着匠人的心血，每一次研磨都保留着食材最本真的营养与风味。我们相信，只有最真诚的食材，才能滋养最真实的生活。</p>
+                    <div class="story-features">
+                        <div class="story-feature">
+                            <div class="story-feature-icon">🌱</div>
+                            <span>天然种植</span>
+                        </div>
+                        <div class="story-feature">
+                            <div class="story-feature-icon">🏔️</div>
+                            <span>产地直供</span>
+                        </div>
+                        <div class="story-feature">
+                            <div class="story-feature-icon">👨‍🍳</div>
+                            <span>匠心研磨</span>
+                        </div>
+                        <div class="story-feature">
+                            <div class="story-feature-icon">🚫</div>
+                            <span>零添加</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Display -->
+    <section class="section brands-display">
+        <div class="container">
+            <div class="section-header">
+                <h2>三大品牌</h2>
+                <p>各有特色，共同守护您的健康生活</p>
+                <div class="line"></div>
+            </div>
+            <div class="brands-grid">
+                <div class="brand-item">
+                    <div class="brand-icon">🌾</div>
+                    <h3>毕生优养</h3>
+                    <p>专注谷物营养，甄选东北黑土地优质原料，传承千年食养智慧，为现代人提供天然、健康的谷物营养解决方案</p>
+                    <span class="brand-origin-tag">📍 原料产地：东北黑土地</span>
+                </div>
+                <div class="brand-item">
+                    <div class="brand-icon">🫘</div>
+                    <h3>豆养坊</h3>
+                    <p>以豆为养，精选有机农场优质豆种，采用先进工艺保留豆香本味，让每一杯豆浆都丝滑浓香，营养丰富</p>
+                    <span class="brand-origin-tag">📍 原料产地：有机农场</span>
+                </div>
+                <div class="brand-item">
+                    <div class="brand-icon">💧</div>
+                    <h3>宋康优泉</h3>
+                    <p>以天然泉水为基底，融入草本植物精华，滴滴纯净，滴滴健康，为您的日常饮水注入自然的滋养</p>
+                    <span class="brand-origin-tag">📍 水源产地：长白山天然泉</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section values-section" id="values">
+        <div class="container">
+            <div class="section-header">
+                <h2>品质保障</h2>
+                <p>品质为先，诚信为本</p>
+                <div class="line"></div>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🌿</div>
+                    <h4>天然原料</h4>
+                    <p>深入优质产区，精选天然纯净食材，从源头把控品质</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🏭</div>
+                    <h4>安全生产</h4>
+                    <p>先进生产工艺，全程质量监控，确保产品安全可靠</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">📦</div>
+                    <h4>快速配送</h4>
+                    <p>全国仓储物流网络覆盖，下单即发货，专业包装</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💝</div>
+                    <h4>贴心服务</h4>
+                    <p>专业客服团队，24小时在线，随时为您解答疑问</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h3>毕生优养</h3>
+                    <p>传承食养文化，倡导天然健康生活方式。致力于为每一位消费者提供高品质的食养产品，让健康成为生活的常态。</p>
+                </div>
+                <div class="footer-col">
+                    <h4>产品中心</h4>
+                    <ul>
+                        <li><a href="#products">毕生优养</a></li>
+                        <li><a href="#products">豆养坊</a></li>
+                        <li><a href="#products">宋康优泉</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#brands">品牌故事</a></li>
+                        <li><a href="#values">品质保证</a></li>
+                        <li><a href="admin.html">管理后台</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>客户服务</h4>
+                    <ul>
+                        <li><a href="#contact">联系客服</a></li>
+                        <li><a href="#contact">配送说明</a></li>
+                        <li><a href="#contact">退换政策</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 毕生优养 版权所有 | 服务热线：400-888-8888</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <button class="product-modal-close" id="productModalClose">×</button>
+            <div class="product-modal-body">
+                <div class="product-modal-image" id="productModalImage">
+                </div>
+                <div class="product-modal-info">
+                    <span class="product-modal-badge" id="productModalBadge"></span>
+                    <div class="product-modal-brand" id="productModalBrand"></div>
+                    <h3 class="product-modal-name" id="productModalName"></h3>
+                    <p class="product-modal-ingredients" id="productModalIngredients"></p>
+                    <div class="product-modal-price" id="productModalPrice"></div>
+                    <div class="product-modal-actions">
+                        <button class="product-modal-btn product-modal-btn-secondary" id="productModalCancel">继续浏览</button>
+                        <button class="product-modal-btn product-modal-btn-primary" id="productModalAddCart">加入购物车</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ========== Default Data ==========
+        const defaultBanners = [
+            {
+                id: 1,
+                title: '天然食养 · 品质生活',
+                desc: '甄选各地优质食材 传承千年食养智慧',
+                btn: '立即选购',
+                icon: '🌾',
+                preview: 'banner-1',
+                slideClass: 'slide-1'
+            },
+            {
+                id: 2,
+                title: '毕生优养 · 营养师会员',
+                desc: '专属权益 专属优惠 专属服务',
+                btn: '了解详情',
+                icon: '👩‍⚕️',
+                preview: 'banner-2',
+                slideClass: 'slide-2'
+            },
+            {
+                id: 3,
+                title: '三大品牌 · 匠心之作',
+                desc: '毕生优养 · 豆养坊 · 宋康优泉',
+                btn: '品牌故事',
+                icon: '💎',
+                preview: 'banner-3',
+                slideClass: 'slide-3'
+            }
+        ];
+
+        const defaultProducts = [
+            {
+                id: 1,
+                brand: 'bsyy',
+                brandName: '毕生优养',
+                name: '核桃芝麻黑豆粉',
+                ingredients: '配料：黑芝麻、核桃、黑豆、山药、茯苓',
+                price: 128,
+                badge: '精选',
+                icon: '🌾',
+                bgClass: 'p-bg-1'
+            },
+            {
+                id: 2,
+                brand: 'dyf',
+                brandName: '豆养坊',
+                name: '有机黄豆浆粉',
+                ingredients: '配料：有机黄豆、麦芽糊精',
+                price: 68,
+                badge: '有机',
+                icon: '🫘',
+                bgClass: 'p-bg-2'
+            },
+            {
+                id: 3,
+                brand: 'skyq',
+                brandName: '宋康优泉',
+                name: '桂花雪梨枇杷膏',
+                ingredients: '配料：雪梨、枇杷、桂花、蜂蜜、冰糖',
+                price: 88,
+                badge: '热销',
+                icon: '🍯',
+                bgClass: 'p-bg-3'
+            },
+            {
+                id: 4,
+                brand: 'bsyy',
+                brandName: '毕生优养',
+                name: '红枣枸杞山药粉',
+                ingredients: '配料：红枣、枸杞、山药、芡实、莲子',
+                price: 118,
+                badge: '新品',
+                icon: '🌿',
+                bgClass: 'p-bg-1'
+            },
+            {
+                id: 5,
+                brand: 'dyf',
+                brandName: '豆养坊',
+                name: '红豆薏米豆浆',
+                ingredients: '配料：红小豆、薏米、黄豆',
+                price: 76,
+                badge: '推荐',
+                icon: '🫘',
+                bgClass: 'p-bg-2'
+            },
+            {
+                id: 6,
+                brand: 'skyq',
+                brandName: '宋康优泉',
+                name: '蜂蜜柠檬枇杷膏',
+                ingredients: '配料：枇杷、柠檬、蜂蜜、冰糖',
+                price: 92,
+                badge: '精选',
+                icon: '🍐',
+                bgClass: 'p-bg-3'
+            },
+            {
+                id: 7,
+                brand: 'bsyy',
+                brandName: '毕生优养',
+                name: '藜麦小米营养粉',
+                ingredients: '配料：藜麦、小米、玉米糁、燕麦',
+                price: 98,
+                badge: '精选',
+                icon: '🍃',
+                bgClass: 'p-bg-1'
+            },
+            {
+                id: 8,
+                brand: 'dyf',
+                brandName: '豆养坊',
+                name: '黑豆核桃芝麻糊',
+                ingredients: '配料：黑豆、核桃、黑芝麻、冰糖',
+                price: 86,
+                badge: '新品',
+                icon: '🫘',
+                bgClass: 'p-bg-2'
+            }
+        ];
+
+        // ========== State Management ==========
+        let currentProducts = [];
+        let currentBanners = [];
+        let currentFilter = 'all';
+
+        // ========== Initialize Local Storage ==========
+        function initLocalStorage() {
+            if (!localStorage.getItem('banners')) {
+                localStorage.setItem('banners', JSON.stringify(defaultBanners));
+            }
+            if (!localStorage.getItem('products')) {
+                localStorage.setItem('products', JSON.stringify(defaultProducts));
+            }
+        }
+
+        // ========== Load Data ==========
+        function loadData() {
+            currentBanners = JSON.parse(localStorage.getItem('banners')) || defaultBanners;
+            currentProducts = JSON.parse(localStorage.getItem('products')) || defaultProducts;
+        }
+
+        // ========== Render Mobile Products ==========
+        function renderMobileProducts(products) {
+            const grid = document.getElementById('mobileProductsGrid');
+            grid.innerHTML = products.map(product => `
+                &lt;div class="mobile-product-card" data-brand="${product.brand}" data-id="${product.id}"&gt;
+                    &lt;div class="mobile-product-img ${product.bgClass}"&gt;
+                        &lt;span class="mobile-product-badge"&gt;${product.badge}&lt;/span&gt;
+                        ${product.icon}
+                    &lt;/div&gt;
+                    &lt;div class="mobile-product-info"&gt;
+                        &lt;div class="mobile-product-brand"&gt;${product.brandName}&lt;/div&gt;
+                        &lt;div class="mobile-product-name"&gt;${product.name}&lt;/div&gt;
+                        &lt;div class="mobile-product-ingredients"&gt;${product.ingredients}&lt;/div&gt;
+                        &lt;div class="mobile-product-footer"&gt;
+                            &lt;div class="mobile-product-price"&gt;&lt;small&gt;¥&lt;/small&gt;${product.price}&lt;/div&gt;
+                            &lt;button class="mobile-product-cart" data-id="${product.id}"&gt;🛒&lt;/button&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            `).join('');
+
+            grid.querySelectorAll('.mobile-product-card').forEach(card =&gt; {
+                card.addEventListener('click', (e) =&gt; {
+                    if (!e.target.closest('.mobile-product-cart')) {
+                        openProductModal(parseInt(card.dataset.id));
+                    }
+                });
+            });
+
+            grid.querySelectorAll('.mobile-product-cart').forEach(btn =&gt; {
+                btn.addEventListener('click', (e) =&gt; {
+                    e.stopPropagation();
+                    addToCart(parseInt(btn.dataset.id));
+                });
+            });
+        }
+
+        // ========== Render Desktop Products ==========
+        function renderDesktopProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product =&gt; `
+                &lt;div class="product-card" data-brand="${product.brand}" data-id="${product.id}"&gt;
+                    &lt;div class="product-image ${product.bgClass}"&gt;
+                        &lt;span class="product-badge"&gt;${product.badge}&lt;/span&gt;
+                        ${product.icon}
+                    &lt;/div&gt;
+                    &lt;div class="product-details"&gt;
+                        &lt;div class="product-brand"&gt;${product.brandName}&lt;/div&gt;
+                        &lt;div class="product-name"&gt;${product.name}&lt;/div&gt;
+                        &lt;div class="product-ingredients"&gt;${product.ingredients}&lt;/div&gt;
+                        &lt;div class="product-footer"&gt;
+                            &lt;div class="product-price"&gt;&lt;small&gt;¥&lt;/small&gt;${product.price}&lt;/div&gt;
+                            &lt;button class="product-cart" data-id="${product.id}"&gt;加入购物车&lt;/button&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            `).join('');
+
+            grid.querySelectorAll('.product-card').forEach(card =&gt; {
+                card.addEventListener('click', (e) =&gt; {
+                    if (!e.target.closest('.product-cart')) {
+                        openProductModal(parseInt(card.dataset.id));
+                    }
+                });
+            });
+
+            grid.querySelectorAll('.product-cart').forEach(btn =&gt; {
+                btn.addEventListener('click', (e) =&gt; {
+                    e.stopPropagation();
+                    addToCart(parseInt(btn.dataset.id));
+                });
+            });
+        }
+
+        // ========== Render Mobile Banners ==========
+        function renderMobileBanners(banners) {
+            const slides = document.getElementById('mobileBannerSlides');
+            const dots = document.getElementById('mobileBannerDots');
+
+            slides.innerHTML = banners.map((banner, index) =&gt; `
+                &lt;div class="mobile-banner-slide ${banner.preview}"&gt;
+                    &lt;div class="mobile-banner-content"&gt;
+                        &lt;div class="banner-icon"&gt;${banner.icon}&lt;/div&gt;
+                        &lt;h2&gt;${banner.title}&lt;/h2&gt;
+                        &lt;p&gt;${banner.desc}&lt;/p&gt;
+                        &lt;a href="#mobile-products" class="mobile-banner-btn"&gt;${banner.btn}&lt;/a&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            `).join('');
+
+            dots.innerHTML = banners.map((banner, index) =&gt; `
+                &lt;span class="mobile-banner-dot ${index === 0 ? 'active' : ''}" data-index="${index}"&gt;&lt;/span&gt;
+            `).join('');
+
+            initMobileBannerSlider();
+        }
+
+        // ========== Render Desktop Banners ==========
+        function renderDesktopBanners(banners) {
+            const slides = document.getElementById('bannerSlides');
+            const dots = document.getElementById('bannerDots');
+
+            slides.innerHTML = banners.map((banner, index) =&gt; `
+                &lt;div class="banner-slide ${banner.slideClass}"&gt;
+                    &lt;div class="banner-content container"&gt;
+                        &lt;span class="slide-tag"&gt;毕生优养&lt;/span&gt;
+                        &lt;h1&gt;${banner.title}&lt;/h1&gt;
+                        &lt;p&gt;${banner.desc}&lt;/p&gt;
+                        &lt;a href="#products" class="banner-btn"&gt;${banner.btn}&lt;/a&gt;
+                    &lt;/div&gt;
+                    &lt;div class="banner-visual"&gt;${banner.icon}&lt;/div&gt;
+                &lt;/div&gt;
+            `).join('');
+
+            dots.innerHTML = banners.map((banner, index) =&gt; `
+                &lt;span class="banner-dot ${index === 0 ? 'active' : ''}" data-index="${index}"&gt;&lt;/span&gt;
+            `).join('');
+
+            initDesktopBannerSlider();
+        }
+
+        // ========== Mobile Banner Slider ==========
+        let mobileCurrentSlide = 0;
+        let mobileAutoSlideInterval;
+
+        function initMobileBannerSlider() {
+            const dots = document.querySelectorAll('.mobile-banner-dot');
+            dots.forEach(dot =&gt; {
+                dot.addEventListener('click', () =&gt; {
+                    clearInterval(mobileAutoSlideInterval);
+                    mobileCurrentSlide = parseInt(dot.dataset.index);
+                    goToMobileSlide(mobileCurrentSlide);
+                    startMobileAutoSlide();
+                });
+            });
+            startMobileAutoSlide();
+        }
+
+        function goToMobileSlide(index) {
+            const slides = document.getElementById('mobileBannerSlides');
+            const dots = document.querySelectorAll('.mobile-banner-dot');
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) =&gt; dot.classList.toggle('active', i === index));
+        }
+
+        function startMobileAutoSlide() {
+            mobileAutoSlideInterval = setInterval(() =&gt; {
+                mobileCurrentSlide = (mobileCurrentSlide + 1) % currentBanners.length;
+                goToMobileSlide(mobileCurrentSlide);
+            }, 4000);
+        }
+
+        // ========== Desktop Banner Slider ==========
+        let desktopCurrentSlide = 0;
+        let desktopAutoSlideInterval;
+
+        function initDesktopBannerSlider() {
+            const dots = document.querySelectorAll('.banner-dot');
+            dots.forEach(dot =&gt; {
+                dot.addEventListener('click', () =&gt; {
+                    clearInterval(desktopAutoSlideInterval);
+                    desktopCurrentSlide = parseInt(dot.dataset.index);
+                    goToDesktopSlide(desktopCurrentSlide);
+                    startDesktopAutoSlide();
+                });
+            });
+            startDesktopAutoSlide();
+        }
+
+        function goToDesktopSlide(index) {
+            const slides = document.getElementById('bannerSlides');
+            const dots = document.querySelectorAll('.banner-dot');
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) =&gt; dot.classList.toggle('active', i === index));
+        }
+
+        function startDesktopAutoSlide() {
+            desktopAutoSlideInterval = setInterval(() =&gt; {
+                desktopCurrentSlide = (desktopCurrentSlide + 1) % currentBanners.length;
+                goToDesktopSlide(desktopCurrentSlide);
+            }, 5000);
+        }
+
+        // ========== Product Modal ==========
+        let currentProduct = null;
+
+        function openProductModal(productId) {
+            const product = currentProducts.find(p =&gt; p.id === productId);
+            if (!product) return;
+
+            currentProduct = product;
+
+            document.getElementById('productModalImage').textContent = product.icon;
+            document.getElementById('productModalBadge').textContent = product.badge;
+            document.getElementById('productModalBrand').textContent = product.brandName;
+            document.getElementById('productModalName').textContent = product.name;
+            document.getElementById('productModalIngredients').textContent = product.ingredients;
+            document.getElementById('productModalPrice').innerHTML = `&lt;small&gt;¥&lt;/small&gt;${product.price}`;
+
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        // ========== Cart Functions ==========
+        function addToCart(productId) {
+            const product = currentProducts.find(p =&gt; p.id === productId);
+            if (!product) return;
+
+            showToast(`已将 "${product.name}" 加入购物车`);
+        }
+
+        // ========== Toast Notification ==========
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() =&gt; toast.classList.remove('show'), 3000);
+        }
+
+        // ========== Search Functions ==========
+        function searchProducts(query) {
+            query = query.toLowerCase().trim();
+            if (!query) {
+                filterProducts(currentFilter);
+                return;
+            }
+
+            const filtered = currentProducts.filter(p =&gt;
+                p.name.toLowerCase().includes(query) ||
+                p.ingredients.toLowerCase().includes(query) ||
+                p.brandName.toLowerCase().includes(query)
+            );
+
+            renderMobileProducts(filtered);
+            renderDesktopProducts(filtered);
+        }
+
+        // ========== Filter Functions ==========
+        function filterProducts(brand) {
+            currentFilter = brand;
+
+            document.querySelectorAll('.brand-tab').forEach(tab =&gt; {
+                tab.classList.toggle('active', tab.dataset.brand === brand);
+            });
+
+            const filtered = brand === 'all'
+                ? currentProducts
+                : currentProducts.filter(p =&gt; p.brand === brand);
+
+            renderMobileProducts(filtered);
+            renderDesktopProducts(filtered);
+        }
+
+        // ========== Mobile Category Filter ==========
+        function initMobileCategoryFilter() {
+            const categories = document.querySelectorAll('.mobile-category-item');
+            categories.forEach(cat =&gt; {
+                cat.addEventListener('click', () =&gt; {
+                    const brand = cat.dataset.brand;
+                    filterProducts(brand);
+                    showToast(brand === 'all' ? '显示全部产品' : `筛选${cat.querySelector('span').textContent}产品`);
+                });
+            });
+        }
+
+        // ========== Smooth Scroll ==========
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor =&gt; {
+                anchor.addEventListener('click', (e) =&gt; {
+                    e.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        const offset = window.innerWidth &lt; 768 ? 60 : 80;
+                        const position = target.offsetTop - offset;
+                        window.scrollTo({ top: position, behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // ========== Mobile Bottom Nav ==========
+        function initMobileBottomNav() {
+            const navItems = document.querySelectorAll('.bottom-nav-item');
+            navItems.forEach(item =&gt; {
+                item.addEventListener('click', () =&gt; {
+                    navItems.forEach(i =&gt; i.classList.remove('active'));
+                    item.classList.add('active');
+
+                    const target = document.querySelector(item.dataset.target);
+                    if (target) {
+                        const offset = 60;
+                        const position = target.offsetTop - offset;
+                        window.scrollTo({ top: position, behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // ========== Event Listeners ==========
+        function initEventListeners() {
+            document.getElementById('productModalClose').addEventListener('click', closeProductModal);
+            document.getElementById('productModalCancel').addEventListener('click', closeProductModal);
+            document.getElementById('productModal').addEventListener('click', (e) =&gt; {
+                if (e.target === document.getElementById('productModal')) {
+                    closeProductModal();
+                }
+            });
+
+            document.getElementById('productModalAddCart').addEventListener('click', () =&gt; {
+                if (currentProduct) {
+                    addToCart(currentProduct.id);
+                    closeProductModal();
+                }
+            });
+
+            document.getElementById('desktopSearchBtn').addEventListener('click', () =&gt; {
+                const query = document.getElementById('desktopSearchInput').value;
+                searchProducts(query);
+            });
+
+            document.getElementById('desktopSearchInput').addEventListener('keypress', (e) =&gt; {
+                if (e.key === 'Enter') {
+                    searchProducts(e.target.value);
+                }
+            });
+
+            document.getElementById('mobileSearchBtn').addEventListener('click', () =&gt; {
+                const query = document.getElementById('mobileSearchInput').value;
+                searchProducts(query);
+            });
+
+            document.getElementById('mobileSearchInput').addEventListener('keypress', (e) =&gt; {
+                if (e.key === 'Enter') {
+                    searchProducts(e.target.value);
+                }
+            });
+
+            document.getElementById('mobileClearFilter').addEventListener('click', (e) =&gt; {
+                e.preventDefault();
+                filterProducts('all');
+                document.getElementById('mobileSearchInput').value = '';
+            });
+
+            document.querySelectorAll('.brand-tab').forEach(tab =&gt; {
+                tab.addEventListener('click', () =&gt; filterProducts(tab.dataset.brand));
+            });
+
+            window.addEventListener('storage', (e) =&gt; {
+                if (e.key === 'banners' || e.key === 'products') {
+                    loadData();
+                    renderMobileBanners(currentBanners);
+                    renderDesktopBanners(currentBanners);
+                    filterProducts(currentFilter);
+                }
+            });
+        }
+
+        // ========== Initialize ==========
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            initLocalStorage();
+            loadData();
+            renderMobileBanners(currentBanners);
+            renderDesktopBanners(currentBanners);
+            renderMobileProducts(currentProducts);
+            renderDesktopProducts(currentProducts);
+            initEventListeners();
+            initMobileCategoryFilter();
+            initMobileBottomNav();
+            initSmoothScroll();
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
