@@ -1,0 +1,137 @@
+.member-page {
+  min-height: 100vh;
+  background-color: $page-bg-color;
+  padding-bottom: $spacing-xl;
+}
+
+.current-level {
+  padding: $spacing-xl;
+  text-align: center;
+  
+  .level-name {
+    display: block;
+    font-size: $font-size-xl;
+    color: #fff;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+  }
+  
+  .level-discount {
+    display: block;
+    font-size: $font-size-base;
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.levels-section {
+  padding: $spacing-lg;
+  background-color: #fff;
+  
+  .section-title {
+    display: block;
+    font-size: $font-size-base;
+    color: $text-color-primary;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+  }
+  
+  .levels-grid {
+    display: flex;
+    gap: $spacing-md;
+    
+    .level-card {
+      flex: 1;
+      background-color: $bg-color-light;
+      border-radius: $border-radius-md;
+      overflow: hidden;
+      
+      &.current {
+        border: 2px solid $primary-color;
+      }
+      
+      .level-header {
+        padding: $spacing-md;
+        text-align: center;
+        
+        .level-title {
+          color: #fff;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-bold;
+        }
+      }
+      
+      .level-content {
+        padding: $spacing-md;
+        
+        .level-discount-text {
+          display: block;
+          font-size: $font-size-sm;
+          color: $text-color-primary;
+          font-weight: $font-weight-bold;
+          margin-bottom: $spacing-sm;
+        }
+        
+        .level-benefits {
+          .benefit-item {
+            padding: $spacing-xs 0;
+            
+            .benefit-text {
+              font-size: $font-size-xs;
+              color: $text-color-secondary;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.upgrade-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: $spacing-base;
+  padding: $spacing-lg;
+  background-color: #fff;
+  border-radius: $border-radius-md;
+  
+  .upgrade-info {
+    .upgrade-title {
+      display: block;
+      font-size: $font-size-base;
+      color: $primary-color;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .upgrade-desc {
+      display: block;
+      font-size: $font-size-sm;
+      color: $text-color-secondary;
+    }
+  }
+  
+  .upgrade-btn {
+    padding: $spacing-sm $spacing-lg;
+    background: linear-gradient(135deg, $primary-color 0%, #F5C77E 100%);
+    border-radius: $border-radius-lg;
+    
+    text {
+      color: #fff;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.compliance-notice {
+  margin: $spacing-base;
+  padding: $spacing-md;
+  background-color: #FFF9F0;
+  border-radius: $border-radius-md;
+  
+  .notice-text {
+    font-size: $font-size-sm;
+    color: $text-color-secondary;
+  }
+}

@@ -1,0 +1,102 @@
+.reports-page {
+  min-height: 100vh;
+  background-color: $page-bg-color;
+  padding: $spacing-md;
+}
+
+.reports-list {
+  .report-card {
+    background-color: #fff;
+    border-radius: $border-radius-md;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-md;
+    
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-md;
+      
+      .report-type {
+        font-size: $font-size-lg;
+        color: $primary-color;
+        font-weight: $font-weight-bold;
+      }
+      
+      .report-status {
+        font-size: $font-size-sm;
+        color: $success-color;
+      }
+    }
+    
+    .report-info {
+      display: flex;
+      margin-bottom: $spacing-md;
+      
+      .info-item {
+        flex: 1;
+        
+        .info-label {
+          display: block;
+          font-size: $font-size-sm;
+          color: $text-color-secondary;
+          margin-bottom: $spacing-xs;
+        }
+        
+        .info-value {
+          display: block;
+          font-size: $font-size-base;
+          color: $text-color-primary;
+        }
+      }
+    }
+    
+    .view-btn {
+      width: 100%;
+      padding: $spacing-sm;
+      background-color: $bg-color-light;
+      border-radius: $border-radius-sm;
+      
+      text {
+        color: $primary-color;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}
+
+.empty-state {
+  padding: $spacing-xxl;
+  text-align: center;
+  
+  text {
+    display: block;
+    font-size: $font-size-base;
+    color: $text-color-secondary;
+    margin-bottom: $spacing-lg;
+  }
+  
+  .new-test-btn {
+    display: inline-block;
+    padding: $spacing-md $spacing-xl;
+    background: linear-gradient(135deg, $primary-color 0%, #F5C77E 100%);
+    border-radius: $border-radius-lg;
+    
+    text {
+      color: #fff;
+      font-size: $font-size-base;
+    }
+  }
+}
+
+.compliance-notice {
+  margin: $spacing-base;
+  padding: $spacing-md;
+  background-color: #FFF9F0;
+  border-radius: $border-radius-md;
+  
+  .notice-text {
+    font-size: $font-size-sm;
+    color: $text-color-secondary;
+  }
+}

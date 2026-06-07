@@ -1,0 +1,55 @@
+.checkin-history-page {
+  min-height: 100vh;
+  background-color: $page-bg-color;
+  padding: $spacing-md;
+}
+
+.records-list {
+  .record-card {
+    background-color: #fff;
+    border-radius: $border-radius-md;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-md;
+    
+    .record-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-sm;
+      
+      .record-type {
+        font-size: $font-size-base;
+        color: $primary-color;
+        font-weight: $font-weight-bold;
+      }
+      
+      .record-points {
+        font-size: $font-size-sm;
+        color: $success-color;
+      }
+    }
+    
+    .record-content {
+      display: block;
+      font-size: $font-size-sm;
+      color: $text-color-secondary;
+      margin-bottom: $spacing-sm;
+    }
+    
+    .record-time {
+      display: block;
+      font-size: $font-size-xs;
+      color: $text-color-placeholder;
+    }
+  }
+}
+
+.empty-state {
+  padding: $spacing-xxl;
+  text-align: center;
+  
+  text {
+    font-size: $font-size-base;
+    color: $text-color-secondary;
+  }
+}

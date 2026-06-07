@@ -1,0 +1,105 @@
+.points-page {
+  min-height: 100vh;
+  background-color: $page-bg-color;
+}
+
+.balance-section {
+  padding: $spacing-xl;
+  background: linear-gradient(135deg, $primary-color 0%, #F5C77E 100%);
+  text-align: center;
+  
+  .balance-label {
+    display: block;
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: $spacing-sm;
+  }
+  
+  .balance-value {
+    display: block;
+    font-size: 72px;
+    color: #fff;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.rules-section, .records-section {
+  padding: $spacing-lg;
+  background-color: #fff;
+  margin-bottom: $spacing-base;
+  
+  .section-title {
+    display: block;
+    font-size: $font-size-base;
+    color: $text-color-primary;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.rules-list {
+  .rule-item {
+    display: flex;
+    align-items: center;
+    padding: $spacing-sm 0;
+    border-bottom: 1px solid $border-color;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .rule-points {
+      width: 80px;
+      font-size: $font-size-base;
+      color: $primary-color;
+      font-weight: $font-weight-bold;
+    }
+    
+    .rule-desc {
+      font-size: $font-size-sm;
+      color: $text-color-secondary;
+    }
+  }
+}
+
+.records-list {
+  .record-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md 0;
+    border-bottom: 1px solid $border-color;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .record-info {
+      .record-desc {
+        display: block;
+        font-size: $font-size-base;
+        color: $text-color-primary;
+        margin-bottom: $spacing-xs;
+      }
+      
+      .record-time {
+        display: block;
+        font-size: $font-size-sm;
+        color: $text-color-secondary;
+      }
+    }
+    
+    .record-points {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bold;
+      
+      &.plus {
+        color: $success-color;
+      }
+      
+      &.minus {
+        color: $error-color;
+      }
+    }
+  }
+}

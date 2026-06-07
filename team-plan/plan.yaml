@@ -1,0 +1,390 @@
+version: 1
+plan:
+  name: '毕生优养商城 Phase1 全框架搭建'
+  max_concurrency: 4
+  max_consecutive_failures: 2
+  max_cycles: 20
+  verifier_config:
+    default_verifiers: [verifier]
+    audit_sample_rate: 0.0
+  message_to_user: 'Phase1 启动！前端/后端/后台三路并行搭建，PRD已先行完成。'
+tasks:
+  # ===== Phase 1-1: 前端小程序骨架（并行Track A，立即启动）=====
+  - id: fe-scaffold
+    title: '搭建微信小程序前端项目骨架'
+    prompt: |
+      你负责为毕生优养健康管理商城搭建微信小程序前端项目。PRD文档已确认在 D:\bisheng-youyang\docs\PRD.md，请先阅读了解需求。
+
+      ## 技术选型
+      - 框架：Taro.js（React版），支持编译到微信小程序 + H5
+      - 项目根目录：D:\bisheng-youyang\frontend\
+      - 状态管理：Zustand
+      - 样式：NutUI（适配多端）
+      - 请求库：Taro.request（封装axios）
+
+      ## 必须完成的内容
+      1. 项目初始化结构（在 D:\bisheng-youyang\frontend\ 下）：
+         - package.json（配置Taro + React + TypeScript依赖）
+         - src/pages/（页面目录）
+         - src/components/（组件目录）
+         - src/api/（接口请求封装目录，按模块分文件）
+         - src/store/（状态管理）
+         - src/utils/（工具函数）
+         - src/assets/（静态资源）
+         - config/（多端配置）
+
+      2. 全局配置文件：
+         - app.config.ts（TabBar配置、窗口配置）
+         - 全局样式变量文件（颜色、字体、间距）
+         - 全局合规文案常量（免责声明固定文本）
+         - 微信登录授权封装工具
+
+      3. TabBar页面（5个底部Tab，不含体质测评和养生课堂）：
+         - src/pages/index/（首页）
+         - src/pages/category/（分类）
+         - src/pages/cart/（购物车）
+         - src/pages/checkin/（养生打卡）
+         - src/pages/user/（我的）
+         每个页面必须包含index.tsx + index.config.ts + index.scss
+
+      4. 首页5大入口框架（所有入口页面均需搭建，有框架无真实数据）：
+         - src/pages/constitution/intro（体质测评说明页，含免责文案）
+         - src/pages/constitution/question（20题问卷框架页）
+         - src/pages/constitution/result（测评结果页）
+         - src/pages/constitution/recommend（推荐方案页）
+         - src/pages/daily-health/list（每日养生图文列表）
+         - src/pages/course/list（养生课堂，含免费/会员/配套三个分类Tab）
+         - src/pages/course/detail（课程详情页，含商品挂载跳转）
+         - src/pages/course/player（视频播放页框架）
+
+      5. 商城模块页面框架：
+         - src/pages/product/list（商品列表占位框架）
+         - src/pages/product/detail（商品详情页，含合规标注占位）
+         - src/pages/order/confirm（订单确认页）
+         - src/pages/order/list（订单列表：全部/待付款/待发货/待收货/已完成）
+         - src/pages/order/aftersale（售后申请页）
+         - src/pages/order/logistics（物流查询页）
+
+      6. 武汉同城模块：
+         - src/pages/city/index（同城首页，含沙龙预约/门店地图入口）
+         - src/pages/city/stores（门店列表占位框架）
+         - src/pages/city/salon（沙龙预约表单页）
+         - src/pages/city/group-buy（拼团购框架）
+
+      7. 个人中心完善：
+         - src/pages/user/member（会员等级说明）
+         - src/pages/user/points（积分明细）
+         - src/pages/user/coupons（我的优惠券）
+         - src/pages/user/constitution-reports（测评报告存档）
+         - src/pages/user/address（收货地址管理，含新增/编辑）
+
+      ## 合规要求（强制执行）
+      - 每个涉及产品/测评/课程的页面必须包含免责文案占位注释：
+        // ⚠️ 合规免责文案：测评结果仅日常膳食参考，非医疗诊断，身体不适请及时就医。
+        // 🍵 合规标注：本品为普通食品，仅作日常食补食用。
+      - 所有页面禁止出现：治病、改善疾病、药用疗效等医疗类词汇
+
+      ## 输出要求
+      - 完整源码写入 D:\bisheng-youyang\frontend\
+      - 创建 src/api/ 下各模块文件（user.ts/cart.ts/product.ts/order.ts/course.ts/city.ts等），接口地址统一用环境变量占位如 process.env.API_BASE
+      - 完成后写入 deliverable.md（汇总本次创建的页面文件列表）
+    assigned_to: mini-frontend
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 D:\bisheng-youyang\frontend\ 目录结构是否完整。
+      必须存在的目录：src/pages/, src/components/, src/api/, src/store/, src/utils/, config/
+      必须存在的页面（全部5个TabBar + 5大入口页面）：
+        - 检查 src/pages/index/, src/pages/category/, src/pages/cart/, src/pages/checkin/, src/pages/user/ 是否各有 index.tsx + index.config.ts + index.scss
+        - 检查 src/pages/constitution/ 下是否有 intro + question + result + recommend 四个子页面
+        - 检查 src/pages/course/ 下是否有 list + detail + player 三个页面
+        - 检查合规文案占位：src/pages/constitution/intro 和 src/pages/product/detail 是否包含免责文案注释
+      如有缺失 FAIL 并列出具体缺失文件。
+    timeout_ms: 2700000
+
+  # ===== Phase 1-2: 后端API骨架（并行Track B，立即启动）=====
+  - id: be-scaffold
+    title: '搭建后端API服务骨架'
+    prompt: |
+      你负责为毕生优养健康管理商城搭建后端API服务。PRD文档已确认在 D:\bisheng-youyang\docs\PRD.md，请先阅读了解接口需求。
+
+      ## 技术选型
+      - 语言：Node.js + Express
+      - 数据库：SQLite（Phase1便携易部署）
+      - ORM：Sequelize
+      - 项目根目录：D:\bisheng-youyang\backend\
+      - API规范：RESTful，JSON格式
+      - 统一响应：{code: 0, message: 'success', data: {...}}
+
+      ## 必须完成的内容
+      1. 项目初始化结构：
+         - package.json（配置express + sequelize + sqlite3 + cors + dotenv）
+         - src/routes/（路由目录）
+         - src/controllers/（控制器目录）
+         - src/models/（数据模型目录）
+         - src/middleware/（中间件目录：错误处理/参数校验/统一响应）
+         - src/services/（业务逻辑层）
+         - src/utils/（工具函数）
+         - config/（环境配置）
+         - database/（SQLite数据库文件和迁移脚本）
+
+      2. 数据库初始化脚本（database/init.js）：
+         创建以下表结构（使用 Sequelize auto）：
+         users/members/points/constitution_records/questions/categories/products/orders/order_items/cart_items/addresses/coupons/checkin_records/courses/events/stores/group_buying/articles/announcements
+
+      3. 全局中间件：
+         - 错误处理中间件（统一错误格式，中文提示）
+         - 参数校验中间件
+         - CORS 跨域中间件
+         - JSON解析中间件
+
+      4. 核心接口（Phase1占位实现，所有接口返回格式统一）：
+         - POST /api/auth/login — 微信授权登录（返回token占位）
+         - GET/PUT /api/auth/userinfo — 用户信息
+         - GET /api/categories — 商品分类（返回占位数据如[{id:1,name:'花养膏系列'}])
+         - GET /api/products — 商品列表（Phase1返回空数组[]占位）
+         - GET /api/products/:id — 商品详情（返回占位数据）
+         - GET/POST/PUT /api/cart — 购物车CRUD
+         - POST /api/orders — 创建订单
+         - GET /api/orders — 订单列表
+         - GET/PUT /api/orders/:id — 订单详情/取消
+         - GET /api/member/info — 会员信息（返回占位数据）
+         - GET /api/points/balance — 积分余额
+         - GET /api/points/records — 积分明细
+         - GET /api/coupons — 优惠券列表
+         - POST /api/constitution/submit — 测评结果提交
+         - GET /api/constitution/reports — 报告查询
+         - POST /api/checkin — 打卡提交
+         - GET /api/checkin/records — 打卡记录
+         - GET /api/checkin/summary — 月度小结
+         - GET /api/courses — 课程列表（Phase1返回空数组[]占位）
+         - GET /api/articles — 每日养生文章列表
+         - GET /api/stores — 门店列表（返回占位数据）
+         - GET /api/salons — 沙龙活动列表
+         - POST /api/salons/reserve — 沙龙预约提交
+
+      5. 部署文件：
+         - README.md（环境变量说明、启动命令：npm install && npm start）
+         - .env.example（API_PORT=3000 等配置示例）
+
+      ## 约束
+      - Phase1商品接口返回空列表[]，不含真实SKU
+      - Phase1课程接口返回空列表[]，不含真实视频
+      - 所有接口必须有中文错误提示
+      - 完成后写入 deliverable.md
+    assigned_to: mini-backend
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 D:\bisheng-youyang\backend\ 目录结构是否完整。
+      必须存在的目录：src/routes/, src/controllers/, src/models/, src/middleware/, config/
+      启动服务：在 backend 目录下运行 npm install && npm start（后台静默运行，不阻塞）
+      测试接口：curl http://localhost:3000/api/categories（应返回JSON格式响应，如 {code:0,message:'success',data:[...]}）
+      测试接口2：curl http://localhost:3000/api/products（应返回JSON，data字段为空数组[]）
+      如有任何失败 FAIL 并列出具体问题。
+    timeout_ms: 2700000
+
+  # ===== Phase 1-3: 后台管理面板骨架（并行Track C，立即启动）=====
+  - id: admin-scaffold
+    title: '搭建后台管理面板骨架'
+    prompt: |
+      你负责为毕生优养健康管理商城搭建后台管理面板。PRD文档已确认在 D:\bisheng-youyang\docs\PRD.md。
+
+      ## 技术选型
+      - 前端框架：Vue3 + Element Plus
+      - 项目根目录：D:\bisheng-youyang\admin\
+      - 路由：Vue Router
+      - 状态管理：Pinia
+      - API对接：调用 D:\bisheng-youyang\backend\ 接口（接口地址占位）
+
+      ## 必须完成的内容
+      1. 项目初始化结构：
+         - package.json（配置vue + vite + element-plus + vue-router + pinia）
+         - src/views/（页面视图目录）
+         - src/api/（接口调用封装目录）
+         - src/router/（路由配置）
+         - src/store/（状态管理）
+         - src/layout/（后台布局组件：左侧菜单+顶部导航）
+         - src/components/（公共组件）
+
+      2. 后台布局框架：
+         - Layout/index.vue（整体布局：左侧菜单 + 顶部导航 + 内容区）
+         - Layout/Sidebar.vue（左侧导航菜单，菜单项对应各功能模块）
+         - Layout/Header.vue（顶部导航：面包屑 + 用户信息 + 退出登录占位）
+
+      3. 后台功能模块页面（全部占位框架，有菜单有表格有搜索，分页占位）：
+         - views/Dashboard/index.vue（数据看板：统计卡片占位，4-6个卡片）
+         - views/Product/index.vue（商品列表：表格+搜索框+新增/编辑/删除按钮框架）
+         - views/Product/category.vue（分类管理）
+         - views/Member/index.vue（会员列表：会员等级/积分/注册时间）
+         - views/Order/index.vue（订单列表：状态Tab筛选+订单表格）
+         - views/Order/aftersale.vue（售后处理页）
+         - views/Constitution/index.vue（体质档案：测评记录列表）
+         - views/Course/index.vue（养生课堂：课程列表+新增表单框架）
+         - views/Course/category.vue（课程分类管理）
+         - views/Article/index.vue（每日养生：文章列表+富文本编辑占位）
+         - views/Checkin/index.vue（打卡管理：记录列表+统计）
+         - views/City/store.vue（门店管理：地图+门店列表）
+         - views/City/salon.vue（沙龙管理：活动列表+预约管理）
+         - views/City/groupbuy.vue（拼团活动管理占位框架）
+         - views/Marketing/coupon.vue（优惠券管理）
+         - views/Marketing/points.vue（积分规则设置占位）
+         - views/System/user.vue（账号管理占位框架）
+         - views/System/announcement.vue（公告管理）
+
+      4. 路由配置（router/index.js）:
+         - /dashboard → Dashboard
+         - /product → Product
+         - /product/category → ProductCategory
+         - /member → Member
+         - /order → Order
+         - /order/aftersale → OrderAftersale
+         - /constitution → Constitution
+         - /course → Course
+         - /course/category → CourseCategory
+         - /article → Article
+         - /checkin → Checkin
+         - /city/store → CityStore
+         - /city/salon → CitySalon
+         - /city/groupbuy → CityGroupBuy
+         - /marketing/coupon → MarketingCoupon
+         - /marketing/points → MarketingPoints
+         - /system/user → SystemUser
+         - /system/announcement → SystemAnnouncement
+
+      5. API封装（src/api/ 下）：
+         - api/product.js（商品相关接口占位）
+         - api/member.js
+         - api/order.js
+         - api/course.js
+         - api/article.js
+         - api/city.js
+         - api/marketing.js
+         - api/system.js
+         接口地址统一用 '/api/admin/xxx' 占位，baseURL 配置在 config/index.js
+
+      6. 部署文件：
+         - README.md（含启动说明：npm install && npm run dev）
+
+      ## 约束
+      - 所有管理页面必须有表格（可空数据占位）+ 搜索表单 + 分页组件
+      - 暂无真实数据调用，接口调用用注释说明接口路径即可
+      - 完成后写入 deliverable.md
+    assigned_to: mini-frontend
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 D:\bisheng-youyang\admin\ 目录结构是否完整。
+      必须存在的目录：src/views/, src/api/, src/router/, src/layout/
+      检查 src/layout/ 下是否有布局组件文件。
+      检查 src/views/ 下是否至少有15个功能模块子目录（Dashboard/Product/Member/Order/Constitution/Course/Article/Checkin/City/Marketing/System等）。
+      检查 src/router/index.js 是否存在并配置了路由。
+      检查 src/api/ 下是否有6个以上接口封装文件。
+      如有缺失 FAIL 并列出具体缺失文件。
+    timeout_ms: 2700000
+
+  # ===== Phase 1-4: 测试用例 + 第一轮验收 =====
+  - id: test-acceptance
+    title: '输出Phase1测试用例 + 第一轮验收'
+    prompt: |
+      你负责为毕生优养商城Phase1框架搭建阶段输出测试用例，并执行第一轮验收。
+
+      ## 测试范围
+      - 前端：D:\bisheng-youyang\frontend\ 小程序骨架
+      - 后端：D:\bisheng-youyang\backend\ API服务骨架
+      - 后台：D:\bisheng-youyang\admin\ 管理面板骨架
+      - 文档：D:\bisheng-youyang\docs\ PRD + WBS任务包
+
+      ## 你的任务
+      1. 编写测试用例文档（输出到 D:\bisheng-youyang\docs\测试用例.md）：
+         - 前端测试用例：页面存在性、TabBar导航、5大入口页面访问、页面合规文案检查
+         - 后端测试用例：各模块接口存在性、响应格式、错误码校验
+         - 后台测试用例：菜单完整性、页面框架完整性
+         - 每项测试用例格式：编号 | 模块 | 用例描述 | 预期结果 | 优先级
+
+      2. 执行第一轮验收：
+         - 前端：检查 D:\bisheng-youyang\frontend\src\pages\ 下各页面目录是否包含必要文件
+         - 后端：运行 cd backend && npm install && npm start（后台静默），测试接口 curl http://localhost:3000/api/categories
+         - 后台：检查 D:\bisheng-youyang\admin\src\views\ 下各模块页面是否存在
+         - 文档：检查 D:\bisheng-youyang\docs\PRD.md 和 WBS任务包.md 内容是否完整
+         - 记录所有发现的问题到问题清单
+
+      3. 输出验收报告（输出到 D:\bisheng-youyang\docs\Phase1验收报告.md）：
+         - 测试执行结果（每项用例 PASS/FAIL）
+         - 问题清单（问题描述 + 严重程度 + 指派人）
+         - Phase1完成状态总结
+         - 交付物清单（前端/后端/后台/文档全部文件列表）
+
+      ## 约束
+      - Phase1阶段不要求接口真实返回数据，只验证框架存在
+      - 发现任何页面/接口缺失直接记入问题清单
+      - 完成后写入 deliverable.md
+    assigned_to: mini-tester
+    depends_on: [fe-scaffold, be-scaffold, admin-scaffold]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 D:\bisheng-youyang\docs\ 下是否生成了：
+      1. 测试用例.md（含前端/后端/后台三类测试用例，不少于30条用例）
+      2. Phase1验收报告.md（含测试执行结果、问题清单、交付物清单）
+      检查验收报告内容：是否覆盖前端/后端/后台/文档四个维度。
+      如有缺失 FAIL 并列出具体缺失文件。
+    timeout_ms: 1800000
+
+  # ===== Phase 1-5: 部署文档汇总 =====
+  - id: deploy-docs
+    title: '输出完整部署文档 + 交付清单'
+    prompt: |
+      你负责为毕生优养商城输出完整部署文档，供小龙虾（外部技术人员）进行服务器配置和部署。
+
+      ## 输出到 D:\bisheng-youyang\docs\部署文档.md
+
+      文档必须包含以下内容：
+
+      1. 项目整体结构说明（frontend/ + backend/ + admin/ + docs/ 各目录用途说明）
+
+      2. 服务器环境要求
+         - 操作系统：Linux CentOS 7+ 或 Ubuntu 20.04+
+         - Node.js 版本：18.x LTS
+         - Nginx 版本：1.18+
+         - PM2（Node进程管理）
+
+      3. 前端部署说明（Taro编译微信小程序 + H5）
+         - 微信开发者工具导入步骤（appid配置位置：frontend/config/index.ts）
+         - H5 Nginx配置示例（含API反向代理）
+         - 域名配置说明
+
+      4. 后端部署说明
+         - 环境变量配置：API_PORT（默认3000）、数据库路径、跨域设置
+         - PM2 启动命令：pm2 start ecosystem.config.js
+         - 数据库文件位置：backend/database/*.sqlite
+         - 接口地址配置说明
+
+      5. 后台管理部署说明
+         - Vue构建：npm install && npm run build
+         - Nginx部署配置示例
+
+      6. 小程序后台配置清单（微信公众平台操作）
+         - 服务器域名白名单配置（request合法域名、uploadFile合法域名、downloadFile合法域名）
+         - 类目配置说明
+         - App Secret 安全设置
+         - 提审版本号规范（格式：1.0.0，每次提审+1）
+         - HTTPS证书要求
+
+      7. 数据库说明
+         - SQLite文件路径及备份方法
+         - MySQL迁移步骤（如需）
+
+      8. 常见问题FAQ（至少8条）
+         - 常见报错处理方案
+
+      9. 交付物完整清单（列出所有源码文件路径）
+
+      ## 约束
+      - 部署文档面向非技术人员小龙虾，语言简洁清晰，每步给出具体命令
+      - 完成后写入 deliverable.md
+    assigned_to: mini-product
+    depends_on: [test-acceptance]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 D:\bisheng-youyang\docs\部署文档.md 是否存在且内容完整。
+      必须包含章节：服务器环境要求、前端部署、后端部署、后台部署、小程序后台配置清单、数据库说明、FAQ、交付物清单
+      检查文档是否面向非技术人员（语言是否清晰易懂，每步是否有具体命令）
+      如有缺失 FAIL 并列出具体缺失章节。
+    timeout_ms: 1800000

@@ -1,0 +1,10 @@
+/* 全局样式 */
+:root {
+  --primary-color: #2E7D32;
+  --sidebar-width: 200px;
+  --header-height: 60px;
+}
+
+body {
+  background-color: #f0f2f5;
+}

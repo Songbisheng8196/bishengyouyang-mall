@@ -1,0 +1,141 @@
+.summary-page {
+  min-height: 100vh;
+  background-color: $page-bg-color;
+  padding-bottom: $spacing-xl;
+}
+
+.stats-card {
+  background: linear-gradient(135deg, $primary-color 0%, #F5C77E 100%);
+  padding: $spacing-xl;
+  
+  .stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    
+    .month-text {
+      font-size: $font-size-xl;
+      color: #fff;
+      font-weight: $font-weight-bold;
+    }
+    
+    .month-label {
+      font-size: $font-size-sm;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  
+  .stats-grid {
+    display: flex;
+    justify-content: space-around;
+    
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      .stat-value {
+        font-size: $font-size-xxl;
+        color: #fff;
+        font-weight: $font-weight-bold;
+      }
+      
+      .stat-label {
+        font-size: $font-size-sm;
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: $spacing-xs;
+      }
+    }
+  }
+}
+
+.types-section, .calendar-section {
+  padding: $spacing-lg;
+  background-color: #fff;
+  margin: $spacing-base;
+  border-radius: $border-radius-md;
+  
+  .section-title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $text-color-primary;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.types-list {
+  .type-item {
+    margin-bottom: $spacing-md;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    .type-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $spacing-xs;
+      
+      .type-name {
+        font-size: $font-size-sm;
+        color: $text-color-primary;
+      }
+      
+      .type-count {
+        font-size: $font-size-sm;
+        color: $primary-color;
+      }
+    }
+    
+    .type-bar {
+      height: 8px;
+      background-color: $bg-color-gray;
+      border-radius: 4px;
+      
+      .bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, $primary-color 0%, #F5C77E 100%);
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: $spacing-sm;
+  
+  .weekday {
+    text-align: center;
+    font-size: $font-size-sm;
+    color: $text-color-secondary;
+    padding: $spacing-sm 0;
+  }
+  
+  .day-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-sm;
+    border-radius: $border-radius-sm;
+    
+    .day-num {
+      font-size: $font-size-sm;
+      color: $text-color-primary;
+    }
+    
+    .check-dot {
+      width: 8px;
+      height: 8px;
+      background-color: $success-color;
+      border-radius: 50%;
+      margin-top: $spacing-xs;
+    }
+    
+    &.checked {
+      background-color: rgba($primary-color, 0.1);
+    }
+  }
+}

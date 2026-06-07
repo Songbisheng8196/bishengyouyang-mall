@@ -1,0 +1,408 @@
+version: 1
+plan:
+  name: '毕生优养商城 Phase2 内容落地'
+  max_concurrency: 4
+  max_consecutive_failures: 2
+  max_cycles: 20
+  auto_accept: true
+  auto_reject_retries: 1
+  verifier_config:
+    default_verifiers: [verifier]
+    audit_sample_rate: 0.0
+  message_to_user: 'Phase2 启动！产品导入/体质题目/AI视频三路并行，PRD已先行完成。'
+tasks:
+  # ===== Track A: 产品素材导入 =====
+  - id: p2b-product-api
+    title: '后端商品数据模型扩展 + 图片上传接口'
+    prompt: |
+      你负责为毕生优养商城 Phase2 进行后端商品模块改造。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 扩展商品数据模型（backend/src/models/product.js）：
+         - 新增字段：images(JSON数组)/tags(JSON数组)/stock(Number)/weight(Number)/originalPrice(Number)
+         - 更新 Sequelize 模型定义
+
+      2. 创建图片上传接口（backend/src/routes/upload.js）：
+         - POST /api/admin/upload/image — 接收 multipart/form-data，保存到 backend/uploads/products/，返回 CDN URL
+         - 使用 multer 中间件（npm install multer）
+         - 配置图片大小限制 5MB，支持 jpg/png/webp
+
+      3. 创建批量导入接口（backend/src/routes/product.js）：
+         - POST /api/admin/products/batch-import — 接收 JSON 格式产品列表，批量写入 database/products.json
+
+      4. 更新商品查询接口（backend/src/controllers/productController.js）：
+         - GET /api/products — 支持 categoryId/keyword/page/pageSize 参数
+         - GET /api/products/:id — 返回完整商品信息（含 images/tags/stock）
+
+      5. 创建首批商品数据（backend/database/products.json）：
+         - 10个SKU数据占位（品类/名称/价格/规格），images字段先用占位URL如 https://via.placeholder.com/400
+         - 标注"【待用户替换图片】"的占位图片URL
+
+      6. 更新 README.md 说明新增接口
+
+      ## 约束
+      - 图片存储在 backend/uploads/products/ 目录（需创建目录）
+      - 统一响应格式：{code:0, message:'success', data:{...}}
+      - Phase2 商品接口返回真实数据结构，不再是空数组
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\backend\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-backend
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 D:\bisheng-youyang\backend\src\models\product.js 是否包含 images/tags/stock/weight 字段定义。
+      验证 backend/uploads/products 目录是否存在。
+      验证 backend/src/routes/upload.js 是否存在。
+      验证 database/products.json 是否包含10个SKU数据。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  - id: p2f-product-frontend
+    title: '前端商品列表/详情页接入真实数据'
+    prompt: |
+      你负责为毕生优养商城 Phase2 前端商品模块改造。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 商品列表页改造（frontend/src/pages/product/list.tsx）：
+         - 调用 GET /api/products 接口获取真实商品数据
+         - 实现分类 Tab 筛选（花养膏/花茶/礼盒）
+         - 实现价格排序
+         - 实现分页加载
+         - 商品卡片显示真实图片/价格/名称
+
+      2. 商品详情页改造（frontend/src/pages/product/detail.tsx）：
+         - 调用 GET /api/products/:id 获取完整商品信息
+         - 图片轮播展示真实商品图片
+         - 显示价格/库存/规格选择
+         - 富文本渲染商品详情 description
+         - "加入购物车"和"立即购买"按钮功能
+         - 确认合规免责文案仍然显示
+
+      3. 首页Banner内容填充（frontend/src/pages/index/index.tsx）：
+         - 接入真实活动 Banner（3个固定 Banner 占位，内容为花养膏新品推广）
+         - 5大入口按钮正常跳转
+
+      4. 商品卡片组件优化（如需要）
+
+      ## 约束
+      - Phase2 不要求真实用户图片（先用占位图），但接口调用逻辑必须完整
+      - 所有页面保留合规免责文案
+      - 使用 Taro.request 封装调用
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\frontend\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-frontend
+    depends_on: [p2b-product-api]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 D:\bisheng-youyang\frontend\src\pages\product\list.tsx 是否调用了 GET /api/products。
+      验证 D:\bisheng-youyang\frontend\src\pages\product\detail.tsx 是否调用了 GET /api/products/:id。
+      验证商品详情页是否保留了合规免责文案占位注释。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  - id: p2a-product-admin
+    title: '后台商品管理图片上传+批量导入功能'
+    prompt: |
+      你负责为毕生优养商城 Phase2 后台商品管理功能改造。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 商品管理列表页改造（admin/src/views/Product/index.vue）：
+         - 商品表格新增"图片"列（显示缩略图）
+         - 表格数据来源：GET /api/admin/products（接入后端接口）
+         - 实现分页功能
+
+      2. 商品新增/编辑表单（admin/src/views/Product/form.vue）：
+         - 图片上传组件：支持多图上传（最多9张）、拖拽排序、图片预览、图片删除
+         - 调用 POST /api/admin/upload/image 上传图片
+         - 商品信息表单：name/categoryId/price/stock/description/tags 等字段
+         - 表单校验（非空验证）
+
+      3. 批量导入功能（admin/src/views/Product/import.vue）：
+         - JSON 格式批量导入界面
+         - 支持粘贴 JSON 或上传 JSON 文件
+         - 预览导入数据
+         - 调用 POST /api/admin/products/batch-import 提交
+
+      4. 商品分类管理完善（admin/src/views/Product/category.vue）：
+         - 分类列表（花养膏系列/养生花茶系列/节气养生礼盒）
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\admin\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-frontend
+    depends_on: [p2b-product-api]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 admin/src/views/Product/form.vue 是否存在图片上传组件。
+      验证 admin/src/views/Product/import.vue 是否存在批量导入功能。
+      检查表单是否包含 name/price/stock/description 等字段。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  # ===== Track B: 体质测评题目 =====
+  - id: p2b-constitution
+    title: '后端体质测评题目录入 + 推荐方案绑定'
+    prompt: |
+      你负责为毕生优养商城 Phase2 后端体质测评模块。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 创建体质测评题库（backend/database/questions.json）：
+         - 20道题目，每题包含 id/title/options(含 label/score)/dimension/weightType 字段
+         - 题目维度分布：精力(气虚)×2/畏寒(阳虚)×2/口干(阴虚)×2/体型(痰湿)×2/面部长痘(湿热)×2/肤色(血瘀)×2/情绪(气郁)×2/过敏(特禀)×2/平和基准×2/女性专项×2
+         - 选项：从不(1分)/偶尔(2分)/有时(3分)/经常(4分)
+
+      2. 扩展体质测评接口（backend/src/controllers/constitutionController.js）：
+         - GET /api/constitution/questions — 返回20道题目列表
+         - POST /api/constitution/submit — 接收 answers，计算体质类型（总分最高者为结果），返回体质类型+推荐方案
+         - GET /api/constitution/recommend — 根据体质类型返回推荐产品/食谱/课程
+
+      3. 推荐方案数据（backend/database/recommendations.json）：
+         - 9种体质 ×（推荐产品SKU + 推荐食谱 + 推荐课程）
+         - 每种体质推荐 1-3 个产品、2 个食谱、1 门课程
+
+      4. 扩展 questions 模型（backend/src/models/question.js）：
+         - 新增字段：dimension/weightType/sortOrder
+
+      ## 约束
+      - 测评结果计算：每种体质权重题得分相加，最高分为判定结果
+      - 题目和推荐方案均存入 JSON 文件，不依赖数据库迁移
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\backend\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-backend
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 backend/database/questions.json 是否存在且包含20道题目。
+      验证 backend/database/recommendations.json 是否存在且包含9种体质推荐方案。
+      验证 backend/src/controllers/constitutionController.js 是否包含 GET /api/constitution/questions 和 POST /api/constitution/submit。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  - id: p2f-constitution-frontend
+    title: '前端体质问卷/结果页接入真实题目和推荐方案'
+    prompt: |
+      你负责为毕生优养商城 Phase2 前端体质测评模块改造。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 问卷页面改造（frontend/src/pages/constitution/question.tsx）：
+         - 调用 GET /api/constitution/questions 获取真实20题
+         - 替换 mock 题目数据
+         - 保留进度条、选项交互逻辑
+         - 提交调用 POST /api/constitution/submit，携带 answers 对象
+         - 提交后跳转 /pages/constitution/result
+
+      2. 结果页面改造（frontend/src/pages/constitution/result.tsx）：
+         - 调用 GET /api/constitution/recommend?type=xxx 获取推荐方案
+         - 显示真实体质类型名称和解读
+         - 显示推荐产品列表（可点击跳转商品详情）
+         - 显示推荐食谱和推荐课程
+         - 保留合规免责文案
+
+      3. 推荐方案页面完善（frontend/src/pages/constitution/recommend.tsx）：
+         - 接入真实推荐产品数据
+         - "加入购物车"按钮功能
+
+      ## 约束
+      - 问卷提交时需做前端校验（所有题目必答）
+      - 保留合规免责文案
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\frontend\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-frontend
+    depends_on: [p2b-constitution]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 frontend/src/pages/constitution/question.tsx 是否调用了 GET /api/constitution/questions。
+      验证 frontend/src/pages/constitution/result.tsx 是否调用了 GET /api/constitution/recommend。
+      验证结果页是否保留了合规免责文案。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  - id: p2a-constitution-admin
+    title: '后台体质题目管理页面'
+    prompt: |
+      你负责为毕生优养商城 Phase2 后台体质题目管理功能。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 体质档案管理页面（admin/src/views/Constitution/index.vue）：
+         - 测评记录列表（用户昵称/体质类型/测评时间/推荐产品）
+         - 按体质类型统计分布（饼图占位或数字统计）
+         - 导出功能占位
+
+      2. 体质题目管理页面（admin/src/views/Constitution/questions.vue）：
+         - 20道题目列表（按体质分类展示：气虚/阳虚/阴虚/痰湿/湿热/血瘀/气郁/特禀/平和）
+         - 每题显示：题目内容/选项/维度/权重体质
+         - 新增题目按钮：弹窗表单（title/options/dimension/weightType）
+         - 编辑题目：修改题目内容
+         - 题目排序：上下拖拽调整顺序
+
+      3. 推荐方案管理（admin/src/views/Constitution/recommendations.vue）：
+         - 9种体质 × 推荐产品/食谱/课程 列表
+         - 每个体质可配置推荐 SKU 列表
+         - 保存调用 PUT /api/admin/constitution/recommendations
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\admin\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-frontend
+    depends_on: [p2b-constitution]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 admin/src/views/Constitution/questions.vue 是否存在且包含题目增删改查逻辑。
+      验证 admin/src/views/Constitution/recommendations.vue 是否存在。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  # ===== Track C: AI 视频课程 =====
+  - id: p2b-course-api
+    title: '后端课程视频接口 + 课程数据录入'
+    prompt: |
+      你负责为毕生优养商城 Phase2 后端课程模块。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 扩展课程数据模型（backend/src/models/course.js）：
+         - 新增字段：videoUrl/String/封面图、coverImage/String/简介、script/Text/讲义脚本、chapters/JSON/章节列表（[{title, startTime, content}]）、categoryType/enum/免费/会员/配套
+
+      2. 创建课程视频上传接口（backend/src/routes/course.js）：
+         - POST /api/admin/courses/upload-video — 接收 mp4 视频文件（最大 500MB），保存到 backend/uploads/courses/，返回 videoUrl
+         - 使用 multer 配置 video 类型的文件过滤器
+
+      3. 更新课程接口（backend/src/controllers/courseController.js）：
+         - GET /api/courses — 返回课程列表（包含 videoUrl/coverImage/title/categoryType）
+         - GET /api/courses/:id — 返回完整课程信息（含 chapters/script）
+         - GET /api/courses?categoryType=免费 — 筛选免费课程
+
+      4. 创建首批课程数据（backend/database/courses.json）：
+         - 10门课程数据（标题/简介/封面图占位URL/视频URL占位/chapters/script占位）
+         - 免费课×3/会员课×5/配套课×2
+
+      ## 约束
+      - 视频 URL 可先用占位 URL，Phase2 视频生成后替换
+      - 章节格式：[{title: "第一章", startTime: "00:00", content: "章节内容摘要"}]
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\backend\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-backend
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 backend/src/models/course.js 是否包含 videoUrl/coverImage/script/chapters/categoryType 字段。
+      验证 backend/src/routes/course.js 是否包含视频上传接口。
+      验证 backend/database/courses.json 是否包含10门课程数据。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  - id: p2f-course-frontend
+    title: '前端课程列表/播放页接入真实视频'
+    prompt: |
+      你负责为毕生优养商城 Phase2 前端课程模块改造。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 课程列表页改造（frontend/src/pages/course/list.tsx）：
+         - 调用 GET /api/courses 获取真实课程数据
+         - 三个分类 Tab：免费科普课/会员专享课/配套课程
+         - 课程卡片显示：封面图/标题/类型标签/时长
+         - 会员课程显示"会员免费"标签
+
+      2. 课程详情页改造（frontend/src/pages/course/detail.tsx）：
+         - 调用 GET /api/courses/:id 获取完整课程信息
+         - 显示课程简介、章节讲义（chapters 列表）
+         - 显示关联产品推荐
+
+      3. 视频播放页改造（frontend/src/pages/course/player.tsx）：
+         - 接入真实 videoUrl（使用 video 标签播放 mp4）
+         - 支持断点续播（记录播放进度到本地存储）
+         - 视频播放器下方必须显示合规免责文案：
+           "⚠️ 本视频内容仅作日常养生参考，非医疗诊疗，身体不适请及时就医。"
+
+      ## 约束
+      - 会员课程需判断用户会员等级，非会员显示"开通会员观看"
+      - 视频加载失败时显示友好提示
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\frontend\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-frontend
+    depends_on: [p2b-course-api]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 frontend/src/pages/course/list.tsx 是否调用了 GET /api/courses。
+      验证 frontend/src/pages/course/player.tsx 是否包含 video 标签和合规免责文案。
+      验证播放器是否包含断点续播逻辑（记录播放位置到本地存储）。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  - id: p2a-course-admin
+    title: '后台课程管理视频上传功能'
+    prompt: |
+      你负责为毕生优养商城 Phase2 后台课程管理功能。Phase2 PRD 补充文档在 D:\bisheng-youyang\docs\Phase2-PRD补充.md，请先阅读。
+
+      ## 必须完成的内容
+      1. 课程管理列表页（admin/src/views/Course/index.vue）：
+         - 课程表格：标题/类型/封面图/视频状态（上架/下架/无视频）
+         - 筛选 Tab：全部/免费/会员/配套
+         - 新增课程按钮
+
+      2. 课程编辑表单（admin/src/views/Course/form.vue）：
+         - 课程基本信息：标题/简介/分类/时长
+         - 封面图上传组件
+         - 视频上传组件（支持 mp4，最大 500MB）
+         - 讲义脚本编辑（textarea 或富文本占位）
+         - 章节编辑：动态添加章节（title/startTime/content）
+         - 保存调用 POST /api/admin/courses
+
+      3. 视频预览功能：上传后可在后台预览播放
+
+      ## 输出
+      - 所有代码写入 D:\bisheng-youyang\admin\
+      - 完成后写入 deliverable.md
+    assigned_to: mini-frontend
+    depends_on: [p2b-course-api]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 admin/src/views/Course/form.vue 是否包含视频上传组件。
+      验证课程表单是否包含 chapters 章节编辑功能。
+      验证是否包含封面图上传功能。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000
+
+  # ===== Phase2 验收 =====
+  - id: p2-acceptance
+    title: 'Phase2 内容落地验收测试'
+    prompt: |
+      你负责为毕生优养商城 Phase2 内容落地阶段进行验收测试。
+
+      ## 验收范围
+      - 后端：D:\bisheng-youyang\backend\
+      - 前端：D:\bisheng-youyang\frontend\
+      - 后台：D:\bisheng-youyang\admin\
+
+      ## 必须验证的内容
+      1. 商品模块：商品列表/详情页是否显示真实数据结构（非空数组），商品图片字段存在
+      2. 测评模块：20道体质测评题目是否全部录入，推荐方案是否绑定9种体质
+      3. 课程模块：10门课程数据是否录入，课程列表是否显示分类
+      4. 合规检查：商品详情页/视频播放页/测评结果页是否保留合规免责文案
+      5. 后台管理：商品图片上传/题目管理/课程视频上传页面是否存在
+
+      ## 输出
+      - 测试用例结果：PASS/FAIL
+      - 问题清单（如有）
+      - Phase2交付物清单
+      - 输出到 D:\bisheng-youyang\docs\Phase2验收报告.md
+      - 完成后写入 deliverable.md
+    assigned_to: mini-tester
+    depends_on: [p2f-product-frontend, p2f-constitution-frontend, p2f-course-frontend, p2a-product-admin, p2a-constitution-admin, p2a-course-admin]
+    verified_by: [verifier]
+    verify_prompt: |
+      验证 D:\bisheng-youyang\docs\Phase2验收报告.md 是否存在且包含：
+      1. 测试用例执行结果（PASS/FAIL）
+      2. 问题清单
+      3. Phase2 交付物清单
+      检查报告是否覆盖商品/测评/课程三个模块。
+      如全部存在 PASS，否则 FAIL 并列出缺失项。
+    timeout_ms: 1800000

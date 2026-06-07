@@ -1,0 +1,48 @@
+{
+  "name": "bisheng-youyang-frontend",
+  "version": "1.0.0",
+  "description": "毕生优养健康管理商城 - 微信小程序 + H5前端",
+  "private": true,
+  "scripts": {
+    "dev:weapp": "taro build --type weapp",
+    "dev:h5": "taro build --type h5",
+    "build:weapp": "taro build --type weapp",
+    "build:h5": "taro build --type h5",
+    "preview:weapp": "taro build --type weapp --preview",
+    "preview:h5": "taro build --type h5 --preview"
+  },
+  "dependencies": {
+    "@tarojs/components": "^3.6.27",
+    "@tarojs/plugin-framework-react": "^3.6.27",
+    "@tarojs/plugin-platform-weapp": "^3.6.27",
+    "@tarojs/react": "^3.6.27",
+    "@tarojs/runtime": "^3.6.27",
+    "@tarojs/taro": "^3.6.27",
+    "@tarojs/webpack5-runner": "^3.6.27",
+    "axios": "^1.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@tarojs/cli": "^3.6.27",
+    "@tarojs/webpack5-prebundle": "^3.6.27",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "@types/webpack-env": "^1.18.4",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "babel-preset-taro": "^3.6.27",
+    "eslint": "^8.54.0",
+    "eslint-config-taro": "^3.6.27",
+    "eslint-plugin-react": "^7.33.2",
+    "stylelint": "^15.10.3",
+    "typescript": "^5.3.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "browserslist": [
+    "Android >= 4.4",
+    "ios >= 9"
+  ]
+}

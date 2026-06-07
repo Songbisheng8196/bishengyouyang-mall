@@ -1,0 +1,189 @@
+.city-page {
+  min-height: 100vh;
+  background-color: $page-bg-color;
+}
+
+.city-banner {
+  position: relative;
+  height: 300px;
+  
+  .banner-image {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .banner-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: $spacing-lg;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    
+    .banner-title {
+      display: block;
+      font-size: $font-size-xxl;
+      color: #fff;
+      font-weight: $font-weight-bold;
+    }
+    
+    .banner-subtitle {
+      display: block;
+      font-size: $font-size-base;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: $spacing-sm;
+    }
+  }
+}
+
+.entry-section {
+  display: flex;
+  padding: $spacing-lg;
+  background-color: #fff;
+  margin-bottom: $spacing-base;
+  
+  .entry-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .entry-icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: $spacing-sm;
+    }
+    
+    .entry-title {
+      font-size: $font-size-base;
+      color: $text-color-primary;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .entry-desc {
+      font-size: $font-size-xs;
+      color: $text-color-secondary;
+    }
+  }
+}
+
+.salon-section, .store-section {
+  padding: $spacing-lg;
+  background-color: #fff;
+  margin-bottom: $spacing-base;
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    
+    .section-title {
+      font-size: $font-size-base;
+      font-weight: $font-weight-bold;
+      color: $text-color-primary;
+    }
+    
+    .section-more {
+      font-size: $font-size-sm;
+      color: $primary-color;
+    }
+  }
+}
+
+.salon-card {
+  display: flex;
+  padding: $spacing-md;
+  background-color: $bg-color-light;
+  border-radius: $border-radius-md;
+  
+  .salon-info {
+    flex: 1;
+    
+    .salon-title {
+      display: block;
+      font-size: $font-size-base;
+      color: $text-color-primary;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-sm;
+    }
+    
+    .salon-meta {
+      display: flex;
+      gap: $spacing-md;
+      margin-bottom: $spacing-sm;
+      
+      .meta-item {
+        font-size: $font-size-sm;
+        color: $text-color-secondary;
+      }
+    }
+    
+    .salon-status {
+      .status-text {
+        font-size: $font-size-sm;
+        color: $primary-color;
+      }
+    }
+  }
+  
+  .salon-action {
+    display: flex;
+    align-items: center;
+    
+    .reserve-btn {
+      padding: $spacing-sm $spacing-md;
+      background-color: $primary-color;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-sm;
+      color: #fff;
+      border: none;
+    }
+  }
+}
+
+.store-list {
+  .store-card {
+    display: flex;
+    padding: $spacing-md;
+    background-color: $bg-color-light;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-md;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    .store-image {
+      width: 160px;
+      height: 120px;
+      border-radius: $border-radius-sm;
+      margin-right: $spacing-md;
+    }
+    
+    .store-info {
+      flex: 1;
+      
+      .store-name {
+        display: block;
+        font-size: $font-size-base;
+        color: $text-color-primary;
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-xs;
+      }
+      
+      .store-address {
+        display: block;
+        font-size: $font-size-sm;
+        color: $text-color-secondary;
+        margin-bottom: $spacing-xs;
+      }
+      
+      .store-distance {
+        font-size: $font-size-sm;
+        color: $primary-color;
+      }
+    }
+  }
+}
